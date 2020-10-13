@@ -3,3 +3,4 @@
 3. Scaffolding basic folder structure and initial pages
 4. Fetching and rendering data
 5. Added the --no-cache flag to make sure the debugger works correctly
+6. Fixed App unit test and added stub HomePage unit test

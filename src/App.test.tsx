@@ -1,9 +1,15 @@
-import React from 'react';
-import { render } from '@testing-library/react';
-import App from './App';
+import React from "react";
+import { render } from "@testing-library/react";
+import { BrowserRouter } from "react-router-dom";
 
-test('renders learn react link', () => {
-  const { getByText } = render(<App />);
-  const linkElement = getByText(/learn react/i);
+import App from "./App";
+
+test("renders learn react link", () => {
+  const { getByText } = render(
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  );
+  const linkElement = getByText(/signup/i);
   expect(linkElement).toBeInTheDocument();
 });
