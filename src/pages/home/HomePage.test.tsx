@@ -37,6 +37,23 @@ test("renders learn react link", async () => {
   expect(postB).toBeInTheDocument();
 });
 
+test("page renders error on network failure", async () => {
+  (axios.get as any).mockImplementation(() =>
+    Promise.reject(new Error("whatever reason"))
+  );
+
+  await act(async () => {
+    render(<HomePage />);
+  });
+  const pageTitleEl = screen.getByText("Codaisseur Coders Network");
+  expect(pageTitleEl).toBeInTheDocument();
+
+  const errorMessageEl = screen.getByText("ERROR!", {
+    selector: "p",
+  });
+  expect(errorMessageEl).toBeInTheDocument();
+});
+
 function makeFakePost(id: number, title: string) {
   return {
     id,
