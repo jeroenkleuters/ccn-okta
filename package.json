@@ -14,6 +14,7 @@
     "@types/react-dom": "^16.9.0",
     "@types/react-router-dom": "^5.1.5",
     "axios": "^0.20.0",
+    "cypress": "^5.4.0",
     "moment": "^2.29.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
@@ -25,6 +26,7 @@
     "start": "react-scripts start --no-cache",
     "build": "react-scripts build",
     "test": "react-scripts test --no-cache",
+    "cypress": "react-scripts start && cypress open",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

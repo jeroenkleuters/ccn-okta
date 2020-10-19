@@ -6,3 +6,4 @@
 6. Fixed App unit test and added stub HomePage unit test
 7. Testing the HomePage component's data fetching
 8. Added HomePage test case for error handling
+9. Added Cypress to the project, and a navigation test
