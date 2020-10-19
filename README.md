@@ -7,3 +7,4 @@
 7. Testing the HomePage component's data fetching
 8. Added HomePage test case for error handling
 9. Added Cypress to the project, and a navigation test
+10. Added Cypress test to check the data fetching on the homepage, including a server mock
