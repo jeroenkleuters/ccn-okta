@@ -1,6 +1,5 @@
 // src/home/HomePage.tsx
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React from "react";
 
 import {
   Grid,
@@ -10,27 +9,13 @@ import {
   Container,
 } from "@material-ui/core";
 
-import { FetchState } from "../../util/fetchstate";
 import { PostsResponse } from "../../lib/model";
+import useFetchData from "../../lib/useFetchData";
 
 export default function HomePage() {
-  const [state, setState] = useState<FetchState<PostsResponse>>({
-    status: "loading",
-  });
-
-  useEffect(() => {
-    (async () => {
-      setState({ status: "loading" });
-      try {
-        const res = await axios.get(
-          "https://codaisseur-coders-network-okta.herokuapp.com/posts"
-        );
-        setState({ status: "success", data: res.data });
-      } catch (error) {
-        setState({ status: "error", error });
-      }
-    })();
-  }, []);
+  const state = useFetchData<PostsResponse>(
+    "https://codaisseur-coders-network-okta.herokuapp.com/posts"
+  );
 
   return (
     <Container fixed>
