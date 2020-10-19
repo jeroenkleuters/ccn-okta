@@ -10,3 +10,4 @@
 10. Added Cypress test to check the data fetching on the homepage, including a server mock
 11. Extracted data fetching logic into useFetchData custom hook
 12. (Branched) Created withFetchData hoc and used in for the HomePage component
+13. Reverted to use of useFetchData instead of withFetchData for HomePage component
