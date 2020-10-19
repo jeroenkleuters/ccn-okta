@@ -9,3 +9,4 @@
 9. Added Cypress to the project, and a navigation test
 10. Added Cypress test to check the data fetching on the homepage, including a server mock
 11. Extracted data fetching logic into useFetchData custom hook
+12. (Branched) Created withFetchData hoc and used in for the HomePage component

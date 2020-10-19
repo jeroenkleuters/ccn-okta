@@ -10,23 +10,23 @@ import {
 } from "@material-ui/core";
 
 import { PostsResponse } from "../../lib/model";
-import useFetchData from "../../lib/useFetchData";
+import withFetchData from "../../lib/withFetchData";
 
-export default function HomePage() {
-  const state = useFetchData<PostsResponse>(
-    "https://codaisseur-coders-network-okta.herokuapp.com/posts"
-  );
+const url = "https://codaisseur-coders-network-okta.herokuapp.com/posts";
 
+export default withFetchData<PostsResponse>(url)(function HomePage({
+  fetchState,
+}) {
   return (
     <Container fixed>
       <Typography variant="h3" component="h1">
         Codaisseur Coders Network
       </Typography>
-      {state.status === "loading" && <p>Loading...</p>}
-      {state.status === "error" && <p>ERROR!</p>}
-      {state.status === "success" && (
+      {fetchState.status === "loading" && <p>Loading...</p>}
+      {fetchState.status === "error" && <p>ERROR!</p>}
+      {fetchState.status === "success" && (
         <Grid container spacing={3}>
-          {state.data.rows.map((post) => {
+          {fetchState.data.rows.map((post) => {
             return (
               <Grid key={post.id} item xs={4}>
                 <Card>
@@ -52,4 +52,4 @@ export default function HomePage() {
       )}
     </Container>
   );
-}
+});
