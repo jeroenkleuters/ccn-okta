@@ -1,5 +1,5 @@
 // src/lib/theme.tsx
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useCallback } from "react";
 
 type CacheItem = {
   url: string;
@@ -25,21 +25,24 @@ export const FetchDataCacheContext = createContext<FetchDataStore>({
 export function FetchDataCacheProvider(props: { children?: React.ReactNode }) {
   const [cache, setCache] = useState<CacheItem[]>([]);
 
-  const addItem = (url: string, data: any) => {
-    // using the functional update pattern
-    //  to be extra safe we don't lose data when adding
-    //  many items in between the same two renders
-    setCache((currentCache) => {
-      const i = currentCache.findIndex((item) => item.url === url);
-      if (i >= 0) {
-        const updatedCache = currentCache.slice();
-        updatedCache.splice(i, 1, { url, data });
-        return updatedCache;
-      } else {
-        return [...currentCache, { url, data }];
-      }
-    });
-  };
+  const addItem = useCallback(
+    (url: string, data: any) => {
+      // using the functional update pattern
+      //  to be extra safe we don't lose data when adding
+      //  many items in between the same two renders
+      setCache((currentCache) => {
+        const i = currentCache.findIndex((item) => item.url === url);
+        if (i >= 0) {
+          const updatedCache = currentCache.slice();
+          updatedCache.splice(i, 1, { url, data });
+          return updatedCache;
+        } else {
+          return [...currentCache, { url, data }];
+        }
+      });
+    },
+    [setCache]
+  );
 
   const getResultsForUrl = (url: string) => {
     return cache.find((item) => item.url === url);

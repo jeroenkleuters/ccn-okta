@@ -19,3 +19,4 @@
 19. Added a custom theme context provider
 20. Dynamically changing the theme
 21. Added an MVP cache context
+22. Wrapped cache's addItem with a useCallback hook
