@@ -10,4 +10,11 @@ export type Theme = {
   };
 };
 
-export const ThemeContext = createContext<null | Theme>(null);
+export const ThemeContext = createContext<Theme>({
+  fontFamily: "sans-serif",
+  colors: {
+    backgroundColor: "white",
+    textColor: "#00c",
+    toolbarBackgroundColor: "#555",
+  },
+});

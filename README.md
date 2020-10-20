@@ -14,3 +14,4 @@
 14. Created FetchData render prop component and used it for the HomePage component
 15. Reverted to use of useFetchData instead of FetchData for HomePage component
 16. Added custom theme context
+17. Added theme fallback value

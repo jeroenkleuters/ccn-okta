@@ -43,7 +43,7 @@ export default function HomePage() {
                       variant="body2"
                       color="textSecondary"
                       component="p"
-                      style={{ color: theme!.colors.textColor }}
+                      style={{ color: theme.colors.textColor }}
                     >
                       {post.content}
                     </Typography>
