@@ -7,37 +7,50 @@ export type Theme = {
     backgroundColor: string;
     textColor: string;
     toolbarBackgroundColor: string;
+    cardBackgroundColor: string;
   };
 };
 
-const initialTheme = {
-  fontFamily: "sans-serif",
-  colors: {
-    backgroundColor: "white",
-    textColor: "#00c",
-    toolbarBackgroundColor: "#555",
+const themes = [
+  {
+    fontFamily: "sans-serif",
+    colors: {
+      backgroundColor: "#eee",
+      textColor: "#444",
+      toolbarBackgroundColor: "#009688",
+      cardBackgroundColor: "#fff",
+    },
   },
-};
+  {
+    fontFamily: "sans-serif",
+    colors: {
+      backgroundColor: "#222",
+      textColor: "#eee",
+      toolbarBackgroundColor: "#111",
+      cardBackgroundColor: "#333",
+    },
+  },
+];
 
 export const ThemeContext = createContext<{
   theme: Theme;
   toggle: () => void;
 }>({
-  theme: initialTheme,
+  theme: themes[0],
   toggle: () => {
     // noop
   },
 });
 
 export function ThemeProvider(props: { children?: React.ReactNode }) {
-  const [theme, setTheme] = useState(initialTheme);
+  const [themeNo, setThemeNo] = useState(0);
 
   const toggle = () => {
-    // TODO: implement this somehow
+    setThemeNo((themeNo + 1) % themes.length);
   };
 
   return (
-    <ThemeContext.Provider value={{ theme, toggle }}>
+    <ThemeContext.Provider value={{ theme: themes[themeNo], toggle }}>
       {props.children}
     </ThemeContext.Provider>
   );

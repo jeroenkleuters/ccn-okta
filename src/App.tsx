@@ -2,6 +2,7 @@
 import React, { useContext } from "react";
 import { AppBar, Toolbar, IconButton, Button } from "@material-ui/core";
 import HomeIcon from "@material-ui/icons/Home";
+import SunnyIcon from "@material-ui/icons/WbSunny";
 import { Switch, Route, Link as RouterLink } from "react-router-dom";
 
 import HomePage from "./pages/home/HomePage";
@@ -10,10 +11,10 @@ import LoginPage from "./pages/auth/LoginPage";
 import { ThemeContext } from "./lib/theme";
 
 export default function App() {
-  const { theme } = useContext(ThemeContext);
+  const { theme, toggle } = useContext(ThemeContext);
 
   return (
-    <div>
+    <div style={{ backgroundColor: theme.colors.backgroundColor }}>
       <AppBar position="static">
         <Toolbar
           style={{
@@ -28,6 +29,14 @@ export default function App() {
             aria-label="menu"
           >
             <HomeIcon />
+          </IconButton>
+          <IconButton
+            onClick={toggle}
+            edge="start"
+            color="inherit"
+            aria-label="menu"
+          >
+            <SunnyIcon />
           </IconButton>
           <div style={{ flexGrow: 1 }} />
           <Button color="inherit" component={RouterLink} to="/signup">

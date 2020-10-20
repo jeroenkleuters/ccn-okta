@@ -22,7 +22,11 @@ export default function HomePage() {
 
   return (
     <Container fixed>
-      <Typography variant="h3" component="h1">
+      <Typography
+        variant="h3"
+        component="h1"
+        style={{ color: theme.colors.textColor }}
+      >
         Codaisseur Coders Network
       </Typography>
       {state.status === "loading" && <p>Loading...</p>}
@@ -32,11 +36,18 @@ export default function HomePage() {
           {state.data.rows.map((post) => {
             return (
               <Grid key={post.id} item xs={4}>
-                <Card>
+                <Card
+                  style={{ backgroundColor: theme.colors.cardBackgroundColor }}
+                >
                   <CardContent
                     style={{ maxHeight: "15rem", overflow: "hidden" }}
                   >
-                    <Typography gutterBottom variant="h5" component="h2">
+                    <Typography
+                      gutterBottom
+                      variant="h5"
+                      component="h2"
+                      style={{ color: theme.colors.textColor }}
+                    >
                       {post.title}
                     </Typography>
                     <Typography
