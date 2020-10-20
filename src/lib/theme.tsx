@@ -1,5 +1,5 @@
 // src/lib/theme.tsx
-import { createContext } from "react";
+import React, { createContext, useState } from "react";
 
 export type Theme = {
   fontFamily: string;
@@ -10,11 +10,35 @@ export type Theme = {
   };
 };
 
-export const ThemeContext = createContext<Theme>({
+const initialTheme = {
   fontFamily: "sans-serif",
   colors: {
     backgroundColor: "white",
     textColor: "#00c",
     toolbarBackgroundColor: "#555",
   },
+};
+
+export const ThemeContext = createContext<{
+  theme: Theme;
+  toggle: () => void;
+}>({
+  theme: initialTheme,
+  toggle: () => {
+    // noop
+  },
 });
+
+export function ThemeProvider(props: { children?: React.ReactNode }) {
+  const [theme, setTheme] = useState(initialTheme);
+
+  const toggle = () => {
+    // TODO: implement this somehow
+  };
+
+  return (
+    <ThemeContext.Provider value={{ theme, toggle }}>
+      {props.children}
+    </ThemeContext.Provider>
+  );
+}

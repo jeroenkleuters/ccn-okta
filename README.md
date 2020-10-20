@@ -16,3 +16,4 @@
 16. Added custom theme context
 17. Added theme fallback value
 18. Setting the toolbar background color in accordance with the theme
+19. Added a custom theme context provider

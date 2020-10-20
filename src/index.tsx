@@ -6,23 +6,14 @@ import App from "./App";
 
 import { BrowserRouter } from "react-router-dom";
 
-import { ThemeContext } from "./lib/theme";
+import { ThemeProvider } from "./lib/theme";
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <ThemeContext.Provider
-        value={{
-          fontFamily: "sans-serif",
-          colors: {
-            backgroundColor: "white",
-            textColor: "#c00",
-            toolbarBackgroundColor: "#555",
-          },
-        }}
-      >
+      <ThemeProvider>
         <App />
-      </ThemeContext.Provider>
+      </ThemeProvider>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById("root")

@@ -18,7 +18,7 @@ export default function HomePage() {
     "https://codaisseur-coders-network-okta.herokuapp.com/posts"
   );
 
-  const theme = useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
 
   return (
     <Container fixed>

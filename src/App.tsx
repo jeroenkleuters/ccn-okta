@@ -10,7 +10,7 @@ import LoginPage from "./pages/auth/LoginPage";
 import { ThemeContext } from "./lib/theme";
 
 export default function App() {
-  const theme = useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
 
   return (
     <div>
