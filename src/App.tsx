@@ -9,9 +9,21 @@ import HomePage from "./pages/home/HomePage";
 import SignupPage from "./pages/auth/SignupPage";
 import LoginPage from "./pages/auth/LoginPage";
 import { ThemeContext } from "./lib/theme";
+import { FetchDataCacheContext } from "./lib/fetchDataCache";
 
 export default function App() {
   const { theme, toggle } = useContext(ThemeContext);
+
+  const { addItem, getResultsForUrl, cache } = useContext(
+    FetchDataCacheContext
+  );
+  console.log("current cache:", cache);
+  console.log("has item?:", getResultsForUrl("http://ab.cd"));
+
+  // just attach this to any random element in the page for now ;)
+  const onClickWhatever = () => {
+    addItem("http://ab.cd", { answer: 42 });
+  };
 
   return (
     <div style={{ backgroundColor: theme.colors.backgroundColor }}>
@@ -47,7 +59,9 @@ export default function App() {
           </Button>
         </Toolbar>
       </AppBar>
-      <div style={{ height: "2rem" }} />
+      <div style={{ height: "2rem" }}>
+        <button onClick={onClickWhatever}>test adding item to cache</button>
+      </div>
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route exact path="/signup" component={SignupPage} />

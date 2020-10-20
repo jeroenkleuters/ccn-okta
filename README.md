@@ -18,3 +18,4 @@
 18. Setting the toolbar background color in accordance with the theme
 19. Added a custom theme context provider
 20. Dynamically changing the theme
+21. Added an MVP cache context
