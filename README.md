@@ -20,3 +20,4 @@
 20. Dynamically changing the theme
 21. Added an MVP cache context
 22. Wrapped cache's addItem with a useCallback hook
+23. Using the cache store to optimizethe useFetchData hook
