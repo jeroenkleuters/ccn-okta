@@ -29,6 +29,9 @@ export default function HomePage() {
       >
         Codaisseur Coders Network
       </Typography>
+      <p>
+        <button onClick={state.refetch}>refetch data</button>
+      </p>
       {state.status === "loading" && <p>Loading...</p>}
       {state.status === "error" && <p>ERROR!</p>}
       {state.status === "success" && (

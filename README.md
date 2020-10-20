@@ -21,3 +21,4 @@
 21. Added an MVP cache context
 22. Wrapped cache's addItem with a useCallback hook
 23. Using the cache store to optimizethe useFetchData hook
+24. Added refetch method to the useFetchData hook

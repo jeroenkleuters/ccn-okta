@@ -5,12 +5,16 @@ import axios from "axios";
 import { FetchState } from "../util/fetchstate";
 import { FetchDataCacheContext } from "./fetchDataCache";
 
-export default function useFetchData<Data>(url: string) {
+export default function useFetchData<Data>(
+  url: string
+): FetchState<Data> & { refetch: () => void } {
   const [state, setState] = useState<FetchState<Data>>({
     status: "loading",
   });
 
-  const { getResultsForUrl, addItem } = useContext(FetchDataCacheContext);
+  const { getResultsForUrl, addItem, removeItem } = useContext(
+    FetchDataCacheContext
+  );
 
   const cachedItem = getResultsForUrl(url);
 
@@ -39,5 +43,9 @@ export default function useFetchData<Data>(url: string) {
   //       (and specifically to make addItem use useCallback so as to
   //        be independent of the render state)
 
-  return state;
+  const refetch = () => {
+    removeItem(url);
+  };
+
+  return { ...state, refetch };
 }

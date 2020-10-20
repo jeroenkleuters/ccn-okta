@@ -9,12 +9,16 @@ type CacheItem = {
 export type FetchDataStore = {
   cache: CacheItem[];
   addItem: (url: string, data: any) => void;
+  removeItem: (url: string) => void;
   getResultsForUrl: (url: string) => undefined | CacheItem;
 };
 
 export const FetchDataCacheContext = createContext<FetchDataStore>({
   cache: [],
   addItem: () => {
+    throw new Error("First wrap the app with <FetchDataCacheProvider>");
+  },
+  removeItem: () => {
     throw new Error("First wrap the app with <FetchDataCacheProvider>");
   },
   getResultsForUrl: () => {
@@ -44,13 +48,29 @@ export function FetchDataCacheProvider(props: { children?: React.ReactNode }) {
     [setCache]
   );
 
+  const removeItem = useCallback(
+    (url: string) => {
+      setCache((currentCache) => {
+        const i = currentCache.findIndex((item) => item.url === url);
+        if (i >= 0) {
+          const updatedCache = currentCache.slice();
+          updatedCache.splice(i, 1);
+          return updatedCache;
+        } else {
+          return currentCache;
+        }
+      });
+    },
+    [setCache]
+  );
+
   const getResultsForUrl = (url: string) => {
     return cache.find((item) => item.url === url);
   };
 
   return (
     <FetchDataCacheContext.Provider
-      value={{ cache, addItem, getResultsForUrl }}
+      value={{ cache, addItem, removeItem, getResultsForUrl }}
     >
       {props.children}
     </FetchDataCacheContext.Provider>
