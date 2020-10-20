@@ -15,3 +15,4 @@
 15. Reverted to use of useFetchData instead of FetchData for HomePage component
 16. Added custom theme context
 17. Added theme fallback value
+18. Setting the toolbar background color in accordance with the theme

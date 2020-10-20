@@ -1,5 +1,5 @@
 // src/App.tsx
-import React from "react";
+import React, { useContext } from "react";
 import { AppBar, Toolbar, IconButton, Button } from "@material-ui/core";
 import HomeIcon from "@material-ui/icons/Home";
 import { Switch, Route, Link as RouterLink } from "react-router-dom";
@@ -7,12 +7,19 @@ import { Switch, Route, Link as RouterLink } from "react-router-dom";
 import HomePage from "./pages/home/HomePage";
 import SignupPage from "./pages/auth/SignupPage";
 import LoginPage from "./pages/auth/LoginPage";
+import { ThemeContext } from "./lib/theme";
 
 export default function App() {
+  const theme = useContext(ThemeContext);
+
   return (
     <div>
       <AppBar position="static">
-        <Toolbar>
+        <Toolbar
+          style={{
+            backgroundColor: theme.colors.toolbarBackgroundColor,
+          }}
+        >
           <IconButton
             component={RouterLink}
             to="/"
