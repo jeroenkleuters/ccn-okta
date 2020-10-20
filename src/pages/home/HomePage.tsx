@@ -1,5 +1,5 @@
 // src/home/HomePage.tsx
-import React from "react";
+import React, { useContext } from "react";
 
 import {
   Grid,
@@ -11,11 +11,14 @@ import {
 
 import { PostsResponse } from "../../lib/model";
 import useFetchData from "../../lib/useFetchData";
+import { ThemeContext } from "../../lib/theme";
 
 export default function HomePage() {
   const state = useFetchData<PostsResponse>(
     "https://codaisseur-coders-network-okta.herokuapp.com/posts"
   );
+
+  const theme = useContext(ThemeContext);
 
   return (
     <Container fixed>
@@ -40,6 +43,7 @@ export default function HomePage() {
                       variant="body2"
                       color="textSecondary"
                       component="p"
+                      style={{ color: theme!.colors.textColor }}
                     >
                       {post.content}
                     </Typography>
