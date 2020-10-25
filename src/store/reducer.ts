@@ -1,6 +1,11 @@
 import { State, Action } from "./types";
 
 const initialState: State = {
+  user: {
+    id: 4,
+    name: "Kelley van Evert",
+    email: "kelley@codaisseur.com",
+  },
   homepageFeed: [
     makeFakePost(
       1,

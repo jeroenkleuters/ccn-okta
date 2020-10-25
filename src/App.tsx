@@ -4,15 +4,23 @@ import { AppBar, Toolbar, IconButton, Button } from "@material-ui/core";
 import HomeIcon from "@material-ui/icons/Home";
 import SunnyIcon from "@material-ui/icons/WbSunny";
 import { Switch, Route, Link as RouterLink } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import HomePage from "./pages/home/HomePage";
 import SignupPage from "./pages/auth/SignupPage";
 import LoginPage from "./pages/auth/LoginPage";
 import { ThemeContext } from "./lib/theme";
 import { FetchDataCacheContext } from "./lib/fetchDataCache";
+import { State } from "./store/types";
+
+const selectUser = (reduxState: State) => {
+  return reduxState.user;
+};
 
 export default function App() {
   const { theme, toggle } = useContext(ThemeContext);
+
+  const user = useSelector(selectUser);
 
   const { addItem, getResultsForUrl, cache } = useContext(
     FetchDataCacheContext
@@ -51,12 +59,21 @@ export default function App() {
             <SunnyIcon />
           </IconButton>
           <div style={{ flexGrow: 1 }} />
-          <Button color="inherit" component={RouterLink} to="/signup">
-            Signup
-          </Button>
-          <Button color="inherit" component={RouterLink} to="/login">
-            Login
-          </Button>
+          {user ? (
+            <>
+              <strong>{user.name}</strong>
+              <Button color="inherit">Logout</Button>
+            </>
+          ) : (
+            <>
+              <Button color="inherit" component={RouterLink} to="/signup">
+                Signup
+              </Button>
+              <Button color="inherit" component={RouterLink} to="/login">
+                Login
+              </Button>
+            </>
+          )}
         </Toolbar>
       </AppBar>
       <div style={{ height: "2rem" }}>
