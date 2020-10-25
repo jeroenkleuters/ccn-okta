@@ -4,7 +4,7 @@ import { AppBar, Toolbar, IconButton, Button } from "@material-ui/core";
 import HomeIcon from "@material-ui/icons/Home";
 import SunnyIcon from "@material-ui/icons/WbSunny";
 import { Switch, Route, Link as RouterLink } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import HomePage from "./pages/home/HomePage";
 import SignupPage from "./pages/auth/SignupPage";
@@ -18,6 +18,7 @@ const selectUser = (reduxState: State) => {
 };
 
 export default function App() {
+  const dispatch = useDispatch();
   const { theme, toggle } = useContext(ThemeContext);
 
   const user = useSelector(selectUser);
@@ -62,7 +63,14 @@ export default function App() {
           {user ? (
             <>
               <strong>{user.name}</strong>
-              <Button color="inherit">Logout</Button>
+              <Button
+                color="inherit"
+                onClick={() => {
+                  dispatch({ type: "logout" });
+                }}
+              >
+                Logout
+              </Button>
             </>
           ) : (
             <>

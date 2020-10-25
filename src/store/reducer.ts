@@ -46,6 +46,10 @@ export function reducer(state: State = initialState, action: Action): State {
         user: action.payload.user,
       };
     }
+    case "logout": {
+      const { token, user, ...rest } = state;
+      return rest;
+    }
     default: {
       return state;
     }

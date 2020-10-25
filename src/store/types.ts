@@ -28,6 +28,9 @@ export type Action =
       };
     }
   | {
+      type: "logout";
+    }
+  | {
       type: "homepage_feed_fetching";
     }
   | {

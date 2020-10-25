@@ -30,3 +30,4 @@
 30. Typing dispatch
 31. Handling the posts fetched action in the reducer
 32. Added back error/loading status, but with Redux
+33. Added logout functionality with Redux
