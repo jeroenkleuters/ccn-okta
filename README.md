@@ -22,3 +22,4 @@
 22. Wrapped cache's addItem with a useCallback hook
 23. Using the cache store to optimizethe useFetchData hook
 24. Added refetch method to the useFetchData hook
+25. Added Redux store
