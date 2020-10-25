@@ -12,14 +12,15 @@ import {
 } from "@material-ui/core";
 
 import { ThemeContext } from "../../lib/theme";
-import { State } from "../../store/types";
+import { State, Action } from "../../store/types";
+import { Dispatch } from "redux";
 
 const selectHomepageFeed = (reduxState: State) => {
   return reduxState.homepageFeed;
 };
 
 export default function HomePage() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<Dispatch<Action>>();
   const { theme } = useContext(ThemeContext);
 
   const posts = useSelector(selectHomepageFeed);

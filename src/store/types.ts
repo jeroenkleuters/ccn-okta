@@ -25,5 +25,9 @@ export type Action =
         token: string;
         user: User;
       };
+    }
+  | {
+      type: "homepage_feed_fetched";
+      payload: Post[];
     };
 // and more to be added later...

@@ -27,3 +27,4 @@
 27. Selected the Redux store data on the homepage feed instead of fetching data with useFetchData
 28. Selecting the currently logged in user in the toolbar
 29. Data fetching with useEffect, but dispatching the fetched data to Redux
+30. Typing dispatch
