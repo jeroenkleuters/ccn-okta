@@ -22,6 +22,12 @@ const initialState: State = {
 
 export function reducer(state: State = initialState, action: Action) {
   switch (action.type) {
+    case "homepage_feed_fetched": {
+      return {
+        ...state,
+        homepageFeed: action.payload,
+      };
+    }
     case "login": {
       return {
         ...state,

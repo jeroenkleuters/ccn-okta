@@ -28,3 +28,4 @@
 28. Selecting the currently logged in user in the toolbar
 29. Data fetching with useEffect, but dispatching the fetched data to Redux
 30. Typing dispatch
+31. Handling the posts fetched action in the reducer
