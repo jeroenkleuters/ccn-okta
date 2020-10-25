@@ -23,21 +23,26 @@ export default function HomePage() {
   const dispatch = useDispatch<Dispatch<Action>>();
   const { theme } = useContext(ThemeContext);
 
-  const posts = useSelector(selectHomepageFeed);
+  const state = useSelector(selectHomepageFeed);
 
   useEffect(() => {
     (async () => {
-      // setState loading
+      dispatch({
+        type: "homepage_feed_fetching",
+      });
       try {
         const res = await axios.get(
           "https://codaisseur-coders-network-okta.herokuapp.com/posts"
         );
         dispatch({
           type: "homepage_feed_fetched",
-          payload: res.data.rows,
+          payload: res.data,
         });
       } catch (error) {
-        // setState error
+        dispatch({
+          type: "homepage_feed_error",
+          payload: error,
+        });
       }
     })();
   }, [dispatch]);
@@ -52,34 +57,39 @@ export default function HomePage() {
         Codaisseur Coders Network
       </Typography>
       <Grid container spacing={3}>
-        {posts.map((post) => {
-          return (
-            <Grid key={post.id} item xs={4}>
-              <Card
-                style={{ backgroundColor: theme.colors.cardBackgroundColor }}
-              >
-                <CardContent style={{ maxHeight: "15rem", overflow: "hidden" }}>
-                  <Typography
-                    gutterBottom
-                    variant="h5"
-                    component="h2"
-                    style={{ color: theme.colors.textColor }}
+        {state.status === "loading" && <p>Loading...</p>}
+        {state.status === "error" && <p>ERROR</p>}
+        {state.status === "success" &&
+          state.data.rows.map((post) => {
+            return (
+              <Grid key={post.id} item xs={4}>
+                <Card
+                  style={{ backgroundColor: theme.colors.cardBackgroundColor }}
+                >
+                  <CardContent
+                    style={{ maxHeight: "15rem", overflow: "hidden" }}
                   >
-                    {post.title}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    color="textSecondary"
-                    component="p"
-                    style={{ color: theme.colors.textColor }}
-                  >
-                    {post.content}
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-          );
-        })}
+                    <Typography
+                      gutterBottom
+                      variant="h5"
+                      component="h2"
+                      style={{ color: theme.colors.textColor }}
+                    >
+                      {post.title}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      color="textSecondary"
+                      component="p"
+                      style={{ color: theme.colors.textColor }}
+                    >
+                      {post.content}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+            );
+          })}
       </Grid>
     </Container>
   );

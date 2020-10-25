@@ -29,3 +29,4 @@
 29. Data fetching with useEffect, but dispatching the fetched data to Redux
 30. Typing dispatch
 31. Handling the posts fetched action in the reducer
+32. Added back error/loading status, but with Redux

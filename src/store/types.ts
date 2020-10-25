@@ -1,6 +1,7 @@
 // src/store/types.ts
 
-import { Post } from "../lib/model";
+import { Post, PostsResponse } from "../lib/model";
+import { FetchState } from "../util/fetchstate";
 
 export type User = {
   id: number;
@@ -11,7 +12,7 @@ export type User = {
 export type State = {
   user?: User;
   token?: string;
-  homepageFeed: Post[];
+  homepageFeed: FetchState<PostsResponse>;
 };
 
 export type Action =
@@ -27,7 +28,14 @@ export type Action =
       };
     }
   | {
+      type: "homepage_feed_fetching";
+    }
+  | {
       type: "homepage_feed_fetched";
-      payload: Post[];
+      payload: PostsResponse;
+    }
+  | {
+      type: "homepage_feed_error";
+      payload: any;
     };
 // and more to be added later...
