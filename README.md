@@ -24,3 +24,4 @@
 24. Added refetch method to the useFetchData hook
 25. Added Redux store
 26. Added Redux Devtools integration
+27. Selected the Redux store data on the homepage feed instead of fetching data with useFetchData
