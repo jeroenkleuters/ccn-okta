@@ -1,6 +1,7 @@
 // src/home/HomePage.tsx
-import React, { useContext } from "react";
-import { useSelector } from "react-redux";
+import React, { useContext, useEffect } from "react";
+import axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
 
 import {
   Grid,
@@ -18,9 +19,27 @@ const selectHomepageFeed = (reduxState: State) => {
 };
 
 export default function HomePage() {
+  const dispatch = useDispatch();
   const { theme } = useContext(ThemeContext);
 
   const posts = useSelector(selectHomepageFeed);
+
+  useEffect(() => {
+    (async () => {
+      // setState loading
+      try {
+        const res = await axios.get(
+          "https://codaisseur-coders-network-okta.herokuapp.com/posts"
+        );
+        dispatch({
+          type: "homepage_feed_fetched",
+          payload: res.data.rows,
+        });
+      } catch (error) {
+        // setState error
+      }
+    })();
+  }, [dispatch]);
 
   return (
     <Container fixed>
