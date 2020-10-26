@@ -1,6 +1,5 @@
 // src/home/HomePage.tsx
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 
 import {
   Grid,
@@ -10,33 +9,39 @@ import {
   Container,
 } from "@material-ui/core";
 
-import { FetchState } from "../../util/fetchstate";
-import { PostsResponse } from "../../lib/model";
+import { useFetchData } from "../../lib/useFetchData";
 
 export default function HomePage() {
-  const [state, setState] = useState<FetchState<PostsResponse>>({
-    status: "loading",
-  });
+  const [searchText, setSearchText] = useState("");
+  const [searchTag, setSearchTag] = useState("sequelize");
 
-  useEffect(() => {
-    (async () => {
-      setState({ status: "loading" });
-      try {
-        const res = await axios.get(
-          "https://codaisseur-coders-network-okta.herokuapp.com/posts"
-        );
-        setState({ status: "success", data: res.data });
-      } catch (error) {
-        setState({ status: "error", error });
-      }
-    })();
-  }, []);
+  const state = useFetchData(
+    "https://codaisseur-coders-network-okta.herokuapp.com/posts?tag=" +
+      searchTag
+  );
 
   return (
     <Container fixed>
       <Typography variant="h3" component="h1">
         Codaisseur Coders Network
       </Typography>
+      <p>
+        Search posts:
+        <input
+          value={searchText}
+          onChange={(e) => {
+            setSearchText(e.target.value);
+          }}
+        />
+        <button
+          onClick={() => {
+            setSearchTag(searchText);
+          }}
+        >
+          Search!
+        </button>
+      </p>
+
       {state.status === "loading" && <p>Loading...</p>}
       {state.status === "error" && <p>ERROR!</p>}
       {state.status === "success" && (

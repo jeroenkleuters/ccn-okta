@@ -1,5 +1,8 @@
 export type FetchState<Data> =
   | {
+      status: "idle";
+    }
+  | {
       status: "loading";
     }
   | {
