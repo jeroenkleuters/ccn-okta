@@ -1,5 +1,5 @@
 // src/home/HomePage.tsx
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import {
@@ -8,25 +8,40 @@ import {
   CardContent,
   Typography,
   Container,
+  Box,
+  Select,
+  MenuItem,
 } from "@material-ui/core";
 
 import { ThemeContext } from "../../lib/theme";
 import { State, AppDispatch } from "../../store/types";
-import { fetchData } from "../../store/homepage/actions";
+import { fetchPostsForTag } from "../../store/homepage/actions";
 
 const selectHomepageFeed = (reduxState: State) => {
   return reduxState.homepageFeed;
 };
 
+const knownTags = [
+  "github",
+  "react",
+  "hooks",
+  "sequelize",
+  "useMemo",
+  "bundling",
+  "tech",
+];
+
 export default function HomePage() {
   const dispatch = useDispatch<AppDispatch>();
   const { theme } = useContext(ThemeContext);
 
+  const [tag, setTag] = useState(knownTags[0]);
+
   const state = useSelector(selectHomepageFeed);
 
   useEffect(() => {
-    dispatch(fetchData);
-  }, [dispatch]);
+    dispatch(fetchPostsForTag(tag));
+  }, [dispatch, tag]);
 
   return (
     <Container fixed>
@@ -37,6 +52,23 @@ export default function HomePage() {
       >
         Codaisseur Coders Network
       </Typography>
+      <Box my={3}>
+        <Typography>
+          Fetch posts for tag:{" "}
+          <Select
+            value={tag}
+            onChange={(e) => setTag(e.target.value as string)}
+          >
+            {knownTags.map((tag) => {
+              return (
+                <MenuItem key={tag} value={tag}>
+                  {tag}
+                </MenuItem>
+              );
+            })}
+          </Select>
+        </Typography>
+      </Box>
       <Grid container spacing={3}>
         {state.status === "loading" && <p>Loading...</p>}
         {state.status === "error" && <p>ERROR</p>}

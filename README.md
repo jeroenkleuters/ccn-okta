@@ -32,3 +32,4 @@
 32. Added back error/loading status, but with Redux
 33. Added logout functionality with Redux
 34. Installed Redux-Thunk, and using a thunk to fetch the homepage feed
+35. Thunk action creator, to fetch homepage posts for a particular tag

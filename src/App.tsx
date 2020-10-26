@@ -1,6 +1,6 @@
 // src/App.tsx
 import React, { useContext } from "react";
-import { AppBar, Toolbar, IconButton, Button } from "@material-ui/core";
+import { AppBar, Box, Toolbar, IconButton, Button } from "@material-ui/core";
 import HomeIcon from "@material-ui/icons/Home";
 import SunnyIcon from "@material-ui/icons/WbSunny";
 import { Switch, Route, Link as RouterLink } from "react-router-dom";
@@ -35,7 +35,7 @@ export default function App() {
   };
 
   return (
-    <div style={{ backgroundColor: theme.colors.backgroundColor }}>
+    <Box pb={10} style={{ backgroundColor: theme.colors.backgroundColor }}>
       <AppBar position="static">
         <Toolbar
           style={{
@@ -92,6 +92,6 @@ export default function App() {
         <Route exact path="/signup" component={SignupPage} />
         <Route exact path="/login" component={LoginPage} />
       </Switch>
-    </div>
+    </Box>
   );
 }
