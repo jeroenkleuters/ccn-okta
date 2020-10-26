@@ -1,6 +1,5 @@
 // src/home/HomePage.tsx
 import React, { useContext, useEffect } from "react";
-import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 
 import {
@@ -12,39 +11,21 @@ import {
 } from "@material-ui/core";
 
 import { ThemeContext } from "../../lib/theme";
-import { State, Action } from "../../store/types";
-import { Dispatch } from "redux";
+import { State, AppDispatch } from "../../store/types";
+import { fetchData } from "../../store/homepage/actions";
 
 const selectHomepageFeed = (reduxState: State) => {
   return reduxState.homepageFeed;
 };
 
 export default function HomePage() {
-  const dispatch = useDispatch<Dispatch<Action>>();
+  const dispatch = useDispatch<AppDispatch>();
   const { theme } = useContext(ThemeContext);
 
   const state = useSelector(selectHomepageFeed);
 
   useEffect(() => {
-    (async () => {
-      dispatch({
-        type: "homepage_feed_fetching",
-      });
-      try {
-        const res = await axios.get(
-          "https://codaisseur-coders-network-okta.herokuapp.com/posts"
-        );
-        dispatch({
-          type: "homepage_feed_fetched",
-          payload: res.data,
-        });
-      } catch (error) {
-        dispatch({
-          type: "homepage_feed_error",
-          payload: error,
-        });
-      }
-    })();
+    dispatch(fetchData);
   }, [dispatch]);
 
   return (

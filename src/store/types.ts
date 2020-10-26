@@ -2,6 +2,7 @@
 
 import { Post, PostsResponse } from "../lib/model";
 import { FetchState } from "../util/fetchstate";
+import { ThunkAction, ThunkDispatch } from "redux-thunk";
 
 export type User = {
   id: number;
@@ -42,3 +43,7 @@ export type Action =
       payload: any;
     };
 // and more to be added later...
+
+export type ThunkResult<R = any> = ThunkAction<R, State, void, Action>;
+
+export type AppDispatch = ThunkDispatch<State, void, Action>;
