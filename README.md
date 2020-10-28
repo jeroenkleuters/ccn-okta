@@ -40,3 +40,4 @@
 40. Added Okta's login callback helper component
 41. Split the navbar out of the app component, and some cleaning up
 42. Added useAuthSync hook
+43. Fetching user's profile from CCN api on login
