@@ -50,6 +50,9 @@ export function NavBar() {
         ) : user ? (
           <>
             <strong>{user.name}</strong>
+            <Button color="inherit" component={RouterLink} to="/my">
+              My profile
+            </Button>
             <Button
               color="inherit"
               onClick={() => {
