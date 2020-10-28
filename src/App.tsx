@@ -11,11 +11,7 @@ import SignupPage from "./pages/auth/SignupPage";
 import LoginPage from "./pages/auth/LoginPage";
 import { useTheme } from "./lib/theme";
 import { FetchDataCacheContext } from "./lib/fetchDataCache";
-import { State } from "./store/types";
-
-const selectUser = (reduxState: State) => {
-  return reduxState.user;
-};
+import { selectUser } from "./store/auth/selectors";
 
 export default function App() {
   const dispatch = useDispatch();

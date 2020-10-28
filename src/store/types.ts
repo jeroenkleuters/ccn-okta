@@ -1,20 +1,15 @@
 // src/store/types.ts
-
-import { Post, PostsResponse } from "../lib/model";
-import { FetchState } from "../util/fetchstate";
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
 
-export type User = {
-  id: number;
-  name: string;
-  email: string;
-};
+import { Post, PostsResponse } from "../lib/model";
+import { AuthState, User } from "./auth/reducer";
+import { HomepageFeedState } from "./homepageFeed/reducer";
+import { DarkModeState } from "./darkMode/reducer";
 
 export type State = {
-  user?: User;
-  token?: string;
-  homepageFeed: FetchState<PostsResponse>;
-  darkMode: boolean;
+  auth: AuthState;
+  homepageFeed: HomepageFeedState;
+  darkMode: DarkModeState;
 };
 
 export type Action =

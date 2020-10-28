@@ -1,5 +1,5 @@
 // src/home/HomePage.tsx
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import {
@@ -14,12 +14,9 @@ import {
 } from "@material-ui/core";
 
 import { useTheme } from "../../lib/theme";
-import { State, AppDispatch } from "../../store/types";
-import { fetchPostsForTag } from "../../store/homepage/actions";
-
-const selectHomepageFeed = (reduxState: State) => {
-  return reduxState.homepageFeed;
-};
+import { AppDispatch } from "../../store/types";
+import { fetchPostsForTag } from "../../store/homepageFeed/actions";
+import { selectHomepageFeed } from "../../store/homepageFeed/selectors";
 
 const knownTags = [
   "github",
