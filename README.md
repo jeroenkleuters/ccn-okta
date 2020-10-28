@@ -34,3 +34,4 @@
 34. Installed Redux-Thunk, and using a thunk to fetch the homepage feed
 35. Thunk action creator, to fetch homepage posts for a particular tag
 36. Moved darkmode setting to redux, and replaced theme context with useTheme helper hook
+37. Caching homepage feed results in the thunk
