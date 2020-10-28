@@ -14,6 +14,7 @@ export type State = {
   user?: User;
   token?: string;
   homepageFeed: FetchState<PostsResponse>;
+  darkMode: boolean;
 };
 
 export type Action =
@@ -27,6 +28,9 @@ export type Action =
         token: string;
         user: User;
       };
+    }
+  | {
+      type: "toggle_dark_mode";
     }
   | {
       type: "logout";

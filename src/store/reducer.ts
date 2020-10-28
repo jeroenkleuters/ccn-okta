@@ -9,10 +9,17 @@ const initialState: State = {
   homepageFeed: {
     status: "loading",
   },
+  darkMode: false,
 };
 
 export function reducer(state: State = initialState, action: Action): State {
   switch (action.type) {
+    case "toggle_dark_mode": {
+      return {
+        ...state,
+        darkMode: !state.darkMode,
+      };
+    }
     case "homepage_feed_fetching": {
       return {
         ...state,

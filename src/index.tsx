@@ -8,19 +8,16 @@ import App from "./App";
 
 import { BrowserRouter } from "react-router-dom";
 
-import { ThemeProvider } from "./lib/theme";
 import { FetchDataCacheProvider } from "./lib/fetchDataCache";
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <ThemeProvider>
-        <Provider store={store}>
-          <FetchDataCacheProvider>
-            <App />
-          </FetchDataCacheProvider>
-        </Provider>
-      </ThemeProvider>
+      <Provider store={store}>
+        <FetchDataCacheProvider>
+          <App />
+        </FetchDataCacheProvider>
+      </Provider>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById("root")

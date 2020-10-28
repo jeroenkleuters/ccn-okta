@@ -9,7 +9,7 @@ import { useSelector, useDispatch } from "react-redux";
 import HomePage from "./pages/home/HomePage";
 import SignupPage from "./pages/auth/SignupPage";
 import LoginPage from "./pages/auth/LoginPage";
-import { ThemeContext } from "./lib/theme";
+import { useTheme } from "./lib/theme";
 import { FetchDataCacheContext } from "./lib/fetchDataCache";
 import { State } from "./store/types";
 
@@ -19,7 +19,7 @@ const selectUser = (reduxState: State) => {
 
 export default function App() {
   const dispatch = useDispatch();
-  const { theme, toggle } = useContext(ThemeContext);
+  const { theme, toggle } = useTheme();
 
   const user = useSelector(selectUser);
 

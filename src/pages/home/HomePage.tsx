@@ -13,7 +13,7 @@ import {
   MenuItem,
 } from "@material-ui/core";
 
-import { ThemeContext } from "../../lib/theme";
+import { useTheme } from "../../lib/theme";
 import { State, AppDispatch } from "../../store/types";
 import { fetchPostsForTag } from "../../store/homepage/actions";
 
@@ -33,7 +33,7 @@ const knownTags = [
 
 export default function HomePage() {
   const dispatch = useDispatch<AppDispatch>();
-  const { theme } = useContext(ThemeContext);
+  const { theme } = useTheme();
 
   const [tag, setTag] = useState(knownTags[0]);
 

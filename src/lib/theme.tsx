@@ -1,5 +1,7 @@
 // src/lib/theme.tsx
-import React, { createContext, useState } from "react";
+import { useCallback } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { State, AppDispatch } from "../store/types";
 
 export type Theme = {
   fontFamily: string;
@@ -11,8 +13,8 @@ export type Theme = {
   };
 };
 
-const themes = [
-  {
+const themes = {
+  light: {
     fontFamily: "sans-serif",
     colors: {
       backgroundColor: "#eee",
@@ -21,7 +23,7 @@ const themes = [
       cardBackgroundColor: "#fff",
     },
   },
-  {
+  dark: {
     fontFamily: "sans-serif",
     colors: {
       backgroundColor: "#222",
@@ -30,28 +32,18 @@ const themes = [
       cardBackgroundColor: "#333",
     },
   },
-];
+};
 
-export const ThemeContext = createContext<{
-  theme: Theme;
-  toggle: () => void;
-}>({
-  theme: themes[0],
-  toggle: () => {
-    // noop
-  },
-});
+export function useTheme() {
+  const darkMode = useSelector((state: State) => state.darkMode);
+  const dispatch = useDispatch<AppDispatch>();
 
-export function ThemeProvider(props: { children?: React.ReactNode }) {
-  const [themeNo, setThemeNo] = useState(0);
+  const toggle = useCallback(() => {
+    dispatch({ type: "toggle_dark_mode" });
+  }, [dispatch]);
 
-  const toggle = () => {
-    setThemeNo((themeNo + 1) % themes.length);
+  return {
+    theme: darkMode ? themes.dark : themes.light,
+    toggle,
   };
-
-  return (
-    <ThemeContext.Provider value={{ theme: themes[themeNo], toggle }}>
-      {props.children}
-    </ThemeContext.Provider>
-  );
 }
