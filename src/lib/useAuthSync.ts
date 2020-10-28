@@ -15,8 +15,8 @@ export function useAuthSync() {
     // console.log(authState);
     if (!authState.isPending && authState.isAuthenticated) {
       dispatch(fetchProfile(authState.accessToken));
-    } else if (!authState.isPending && authState.isAuthenticated) {
-      console.log("TODO: logout logic");
+    } else if (!authState.isPending && !authState.isAuthenticated) {
+      dispatch({ type: "logout" });
     }
   }, [dispatch, authState]);
 }

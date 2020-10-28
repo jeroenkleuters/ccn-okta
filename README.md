@@ -41,3 +41,4 @@
 41. Split the navbar out of the app component, and some cleaning up
 42. Added useAuthSync hook
 43. Fetching user's profile from CCN api on login
+44. Updating the navbar to reflect the user's auth state, and making the login and logout buttons work
