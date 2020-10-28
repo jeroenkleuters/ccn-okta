@@ -36,3 +36,4 @@
 36. Moved darkmode setting to redux, and replaced theme context with useTheme helper hook
 37. Caching homepage feed results in the thunk
 38. Sliced the store's state
+39. Installed Okta and added a secure route

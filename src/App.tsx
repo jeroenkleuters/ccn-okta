@@ -6,12 +6,16 @@ import SunnyIcon from "@material-ui/icons/WbSunny";
 import { Switch, Route, Link as RouterLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
+// @ts-ignore
+import { SecureRoute } from "@okta/okta-react";
+
 import HomePage from "./pages/home/HomePage";
 import SignupPage from "./pages/auth/SignupPage";
 import LoginPage from "./pages/auth/LoginPage";
 import { useTheme } from "./lib/theme";
 import { FetchDataCacheContext } from "./lib/fetchDataCache";
 import { selectUser } from "./store/auth/selectors";
+import ProfilePage from "./pages/my/ProfilePage";
 
 export default function App() {
   const dispatch = useDispatch();
@@ -87,6 +91,7 @@ export default function App() {
         <Route exact path="/" component={HomePage} />
         <Route exact path="/signup" component={SignupPage} />
         <Route exact path="/login" component={LoginPage} />
+        <SecureRoute exact path="/my" component={ProfilePage} />
       </Switch>
     </Box>
   );
