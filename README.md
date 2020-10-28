@@ -37,3 +37,4 @@
 37. Caching homepage feed results in the thunk
 38. Sliced the store's state
 39. Installed Okta and added a secure route
+40. Added Okta's login callback helper component

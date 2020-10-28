@@ -7,7 +7,7 @@ import { Switch, Route, Link as RouterLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 // @ts-ignore
-import { SecureRoute } from "@okta/okta-react";
+import { SecureRoute, LoginCallback } from "@okta/okta-react";
 
 import HomePage from "./pages/home/HomePage";
 import SignupPage from "./pages/auth/SignupPage";
@@ -88,6 +88,7 @@ export default function App() {
         <button onClick={onClickWhatever}>test adding item to cache</button>
       </div>
       <Switch>
+        <Route exact path="/implicit/callback" component={LoginCallback} />
         <Route exact path="/" component={HomePage} />
         <Route exact path="/signup" component={SignupPage} />
         <Route exact path="/login" component={LoginPage} />
