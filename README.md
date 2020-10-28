@@ -38,3 +38,4 @@
 38. Sliced the store's state
 39. Installed Okta and added a secure route
 40. Added Okta's login callback helper component
+41. Split the navbar out of the app component, and some cleaning up
