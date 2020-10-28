@@ -6,9 +6,7 @@ const initialState: State = {
     name: "Kelley van Evert",
     email: "kelley@codaisseur.com",
   },
-  homepageFeed: {
-    status: "loading",
-  },
+  homepageFeed: {},
   darkMode: false,
 };
 
@@ -24,7 +22,10 @@ export function reducer(state: State = initialState, action: Action): State {
       return {
         ...state,
         homepageFeed: {
-          status: "loading",
+          ...state.homepageFeed,
+          [action.payload.tag]: {
+            status: "loading",
+          },
         },
       };
     }
@@ -32,8 +33,11 @@ export function reducer(state: State = initialState, action: Action): State {
       return {
         ...state,
         homepageFeed: {
-          status: "success",
-          data: action.payload,
+          ...state.homepageFeed,
+          [action.payload.tag]: {
+            status: "success",
+            data: action.payload.data,
+          },
         },
       };
     }
@@ -41,8 +45,11 @@ export function reducer(state: State = initialState, action: Action): State {
       return {
         ...state,
         homepageFeed: {
-          status: "error",
-          error: action.payload,
+          ...state.homepageFeed,
+          [action.payload.tag]: {
+            status: "error",
+            error: action.payload,
+          },
         },
       };
     }

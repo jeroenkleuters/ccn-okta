@@ -5,22 +5,32 @@ import axios from "axios";
 
 export const fetchPostsForTag = (tag: string): ThunkResult => {
   return async (dispatch, getState) => {
-    dispatch({
-      type: "homepage_feed_fetching",
-    });
-    try {
-      const res = await axios.get(
-        "https://codaisseur-coders-network-okta.herokuapp.com/posts?tag=" + tag
-      );
+    const state = getState().homepageFeed[tag];
+    if (!state) {
       dispatch({
-        type: "homepage_feed_fetched",
-        payload: res.data,
+        type: "homepage_feed_fetching",
+        payload: {
+          tag,
+        },
       });
-    } catch (error) {
-      dispatch({
-        type: "homepage_feed_error",
-        payload: error,
-      });
+      try {
+        const res = await axios.get(
+          "https://codaisseur-coders-network-okta.herokuapp.com/posts?tag=" +
+            tag
+        );
+        dispatch({
+          type: "homepage_feed_fetched",
+          payload: {
+            tag,
+            data: res.data,
+          },
+        });
+      } catch (error) {
+        dispatch({
+          type: "homepage_feed_error",
+          payload: { tag, error },
+        });
+      }
     }
   };
 };

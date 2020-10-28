@@ -1,5 +1,5 @@
 // src/home/HomePage.tsx
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import {
@@ -17,8 +17,10 @@ import { useTheme } from "../../lib/theme";
 import { State, AppDispatch } from "../../store/types";
 import { fetchPostsForTag } from "../../store/homepage/actions";
 
-const selectHomepageFeed = (reduxState: State) => {
-  return reduxState.homepageFeed;
+const selectHomepageFeed = (tag: string) => {
+  return (reduxState: State) => {
+    return reduxState.homepageFeed[tag];
+  };
 };
 
 const knownTags = [
@@ -37,7 +39,7 @@ export default function HomePage() {
 
   const [tag, setTag] = useState(knownTags[0]);
 
-  const state = useSelector(selectHomepageFeed);
+  const state = useSelector(selectHomepageFeed(tag));
 
   useEffect(() => {
     dispatch(fetchPostsForTag(tag));
@@ -70,9 +72,9 @@ export default function HomePage() {
         </Typography>
       </Box>
       <Grid container spacing={3}>
-        {state.status === "loading" && <p>Loading...</p>}
-        {state.status === "error" && <p>ERROR</p>}
-        {state.status === "success" &&
+        {state?.status === "loading" && <p>Loading...</p>}
+        {state?.status === "error" && <p>ERROR</p>}
+        {state?.status === "success" &&
           state.data.rows.map((post) => {
             return (
               <Grid key={post.id} item xs={4}>

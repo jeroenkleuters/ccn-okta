@@ -13,7 +13,9 @@ export type User = {
 export type State = {
   user?: User;
   token?: string;
-  homepageFeed: FetchState<PostsResponse>;
+  homepageFeed: {
+    [tag: string]: undefined | FetchState<PostsResponse>;
+  };
   darkMode: boolean;
 };
 
@@ -37,14 +39,21 @@ export type Action =
     }
   | {
       type: "homepage_feed_fetching";
+      payload: { tag: string };
     }
   | {
       type: "homepage_feed_fetched";
-      payload: PostsResponse;
+      payload: {
+        tag: string;
+        data: PostsResponse;
+      };
     }
   | {
       type: "homepage_feed_error";
-      payload: any;
+      payload: {
+        tag: string;
+        error: any;
+      };
     };
 // and more to be added later...
 
