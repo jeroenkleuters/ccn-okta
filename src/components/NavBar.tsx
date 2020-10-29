@@ -5,20 +5,17 @@ import { AppBar, Toolbar, IconButton, Button } from "@material-ui/core";
 import HomeIcon from "@material-ui/icons/Home";
 import SunnyIcon from "@material-ui/icons/WbSunny";
 import { Link as RouterLink } from "react-router-dom";
-// @ts-ignore
-import { useOktaAuth } from "@okta/okta-react";
 
 import { useTheme } from "../lib/theme";
-import { selectUser } from "../store/auth/selectors";
+import { selectUser, selectAuthStatus } from "../store/auth/selectors";
+import { useMyOkta } from "../lib/okta";
 
 export function NavBar() {
   const { theme, toggle } = useTheme();
+  const authStatus = useSelector(selectAuthStatus);
   const user = useSelector(selectUser);
 
-  const { authService, authState } = useOktaAuth();
-
-  const authLoading =
-    authState.isPending || (authState.isAuthenticated && !user);
+  const { loginRedirect, logout } = useMyOkta();
 
   return (
     <AppBar position="static">
@@ -45,31 +42,21 @@ export function NavBar() {
           <SunnyIcon />
         </IconButton>
         <div style={{ flexGrow: 1 }} />
-        {authLoading ? (
-          <strong>loading...</strong>
+        {authStatus === "loading" ? (
+          <p>loading...</p>
         ) : user ? (
           <>
             <strong>{user.name}</strong>
             <Button color="inherit" component={RouterLink} to="/my">
               My profile
             </Button>
-            <Button
-              color="inherit"
-              onClick={() => {
-                authService.logout();
-              }}
-            >
+            <Button color="inherit" onClick={logout}>
               Logout
             </Button>
           </>
         ) : (
           <>
-            <Button
-              color="inherit"
-              onClick={() => {
-                authService.login();
-              }}
-            >
+            <Button color="inherit" onClick={loginRedirect}>
               Login
             </Button>
           </>

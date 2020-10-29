@@ -4,26 +4,24 @@ import "./index.css";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
-// @ts-ignore
-import { Security } from "@okta/okta-react";
 
 import { store } from "./store";
 import App from "./App";
 
 import { FetchDataCacheProvider } from "./lib/fetchDataCache";
-import { oktaConfig } from "./config";
+import { MyOktaAuthProvider } from "./lib/okta";
 
 ReactDOM.render(
   <React.StrictMode>
-    <Security {...oktaConfig}>
-      <BrowserRouter>
-        <Provider store={store}>
+    <BrowserRouter>
+      <Provider store={store}>
+        <MyOktaAuthProvider>
           <FetchDataCacheProvider>
             <App />
           </FetchDataCacheProvider>
-        </Provider>
-      </BrowserRouter>
-    </Security>
+        </MyOktaAuthProvider>
+      </Provider>
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById("root")
 );

@@ -7,11 +7,24 @@ export type User = {
   email: string;
 };
 
-export type AuthState = null | {
-  user: User;
-};
+// loading
+// logged in
+// logged out
 
-const initialState: AuthState = null;
+export type AuthState =
+  | {
+      status: "logged_in";
+      token: string;
+      user: User;
+    }
+  | {
+      status: "logged_out";
+    }
+  | {
+      status: "loading";
+    };
+
+const initialState: AuthState = { status: "loading" };
 
 export default function authSliceReducer(
   state: AuthState = initialState,
@@ -19,10 +32,13 @@ export default function authSliceReducer(
 ): AuthState {
   switch (action.type) {
     case "login": {
-      return action.payload;
+      return {
+        status: "logged_in",
+        ...action.payload,
+      };
     }
     case "logout": {
-      return null;
+      return { status: "logged_out" };
     }
     default: {
       return state;

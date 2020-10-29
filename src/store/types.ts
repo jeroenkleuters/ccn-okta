@@ -20,6 +20,7 @@ export type Action =
   | {
       type: "login";
       payload: {
+        token: string;
         user: User;
       };
     }
