@@ -31,6 +31,59 @@ export function homepageFeedSliceReducer(
         error: action.payload,
       };
     }
+    case "post_liked": {
+      if (state.status !== "success") {
+        return state;
+      }
+      const { postId, me } = action.payload;
+      return {
+        ...state,
+        data: {
+          count: state.data.count,
+          rows: state.data.rows.map((post) => {
+            if (post.id !== postId) {
+              return post;
+            } else {
+              return {
+                ...post,
+                post_likes: [
+                  ...post.post_likes,
+                  {
+                    createdAt: "", // niet heel mooi
+                    updatedAt: "", // niet heel mooi
+                    developer: me,
+                  },
+                ],
+              };
+            }
+          }),
+        },
+      };
+    }
+    case "post_disliked": {
+      if (state.status !== "success") {
+        return state;
+      }
+      const { postId, me } = action.payload;
+      return {
+        ...state,
+        data: {
+          count: state.data.count,
+          rows: state.data.rows.map((post) => {
+            if (post.id !== postId) {
+              return post;
+            } else {
+              return {
+                ...post,
+                post_likes: post.post_likes.filter((like) => {
+                  return like.developer.id !== me.id;
+                }),
+              };
+            }
+          }),
+        },
+      };
+    }
     default: {
       return state;
     }

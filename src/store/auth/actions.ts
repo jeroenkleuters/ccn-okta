@@ -1,6 +1,6 @@
 // src/store/auth/actions.ts
 
-import { ThunkResult } from "../types";
+import { ThunkResult, Action } from "../types";
 import axios from "axios";
 
 export const fetchProfile = (accessToken: string): ThunkResult => {
@@ -14,10 +14,11 @@ export const fetchProfile = (accessToken: string): ThunkResult => {
           },
         }
       );
-      dispatch({
+      dispatch<Action>({
         type: "login",
         payload: {
           user: res.data,
+          token: accessToken,
         },
       });
     } catch (error) {

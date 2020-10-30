@@ -9,6 +9,7 @@ export type User = {
 
 export type AuthState = null | {
   user: User;
+  token: string;
 };
 
 const initialState: AuthState = null;

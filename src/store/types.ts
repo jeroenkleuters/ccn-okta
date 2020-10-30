@@ -21,6 +21,7 @@ export type Action =
       type: "login";
       payload: {
         user: User;
+        token: string;
       };
     }
   | {
@@ -39,6 +40,20 @@ export type Action =
   | {
       type: "homepage_feed_error";
       payload: any;
+    }
+  | {
+      type: "post_liked";
+      payload: {
+        postId: number;
+        me: User;
+      };
+    }
+  | {
+      type: "post_disliked";
+      payload: {
+        postId: number;
+        me: User;
+      };
     };
 // and more to be added later...
 

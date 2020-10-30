@@ -3,20 +3,30 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import {
+  Badge,
   Grid,
   Card,
   CardContent,
+  CardActions,
   Typography,
   Container,
   Box,
   Select,
   MenuItem,
+  IconButton,
 } from "@material-ui/core";
+import ThumbUpIcon from "@material-ui/icons/ThumbUp";
+import ThumbUpOutlinedIcon from "@material-ui/icons/ThumbUpOutlined";
 
 import { useTheme } from "../../lib/theme";
 import { AppDispatch } from "../../store/types";
-import { fetchPostsForTag } from "../../store/homepageFeed/actions";
+import {
+  fetchPostsForTag,
+  likePost,
+  dislikePost,
+} from "../../store/homepageFeed/actions";
 import { selectHomepageFeed } from "../../store/homepageFeed/selectors";
+import { selectUser } from "../../store/auth/selectors";
 
 const knownTags = [
   "github",
@@ -31,6 +41,8 @@ const knownTags = [
 export default function HomePage() {
   const dispatch = useDispatch<AppDispatch>();
   const { theme } = useTheme();
+
+  const me = useSelector(selectUser);
 
   const [tag, setTag] = useState(knownTags[0]);
 
@@ -71,14 +83,16 @@ export default function HomePage() {
         {state.status === "error" && <p>ERROR</p>}
         {state.status === "success" &&
           state.data.rows.map((post) => {
+            const likedByMe = post.post_likes.find((like) => {
+              return like.developer.id === me?.id;
+            });
+
             return (
               <Grid key={post.id} item xs={4}>
                 <Card
                   style={{ backgroundColor: theme.colors.cardBackgroundColor }}
                 >
-                  <CardContent
-                    style={{ maxHeight: "15rem", overflow: "hidden" }}
-                  >
+                  <CardContent style={{ overflow: "hidden" }}>
                     <Typography
                       gutterBottom
                       variant="h5"
@@ -91,11 +105,41 @@ export default function HomePage() {
                       variant="body2"
                       color="textSecondary"
                       component="p"
-                      style={{ color: theme.colors.textColor }}
+                      style={{
+                        color: theme.colors.textColor,
+                        maxHeight: "10rem",
+                        overflow: "hidden",
+                      }}
                     >
                       {post.content}
                     </Typography>
                   </CardContent>
+                  {me && (
+                    <CardActions disableSpacing>
+                      <Badge
+                        badgeContent={post.post_likes.length}
+                        color="primary"
+                      >
+                        {likedByMe ? (
+                          <IconButton
+                            color="primary"
+                            component="span"
+                            onClick={() => dispatch(dislikePost(post.id))}
+                          >
+                            <ThumbUpIcon />
+                          </IconButton>
+                        ) : (
+                          <IconButton
+                            color="primary"
+                            component="span"
+                            onClick={() => dispatch(likePost(post.id))}
+                          >
+                            <ThumbUpOutlinedIcon />
+                          </IconButton>
+                        )}
+                      </Badge>
+                    </CardActions>
+                  )}
                 </Card>
               </Grid>
             );
