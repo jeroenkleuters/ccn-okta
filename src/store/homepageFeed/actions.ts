@@ -2,9 +2,43 @@
 
 import { ThunkResult } from "../types";
 import axios from "axios";
+import { PostsResponse } from "../../lib/model";
+import { User } from "../auth/reducer";
 
-const _cache: {
-  [tag: string]: any;
+export function updatePostsResponse(
+  resp: PostsResponse,
+  postId: number,
+  me: User,
+  liked: boolean
+) {
+  return {
+    count: resp.count,
+    rows: resp.rows.map((post) => {
+      if (post.id !== postId) {
+        return post;
+      } else {
+        return {
+          ...post,
+          post_likes: liked
+            ? [
+                ...post.post_likes,
+                {
+                  createdAt: "", // niet heel mooi
+                  updatedAt: "", // niet heel mooi
+                  developer: me,
+                },
+              ]
+            : post.post_likes.filter((like) => {
+                return like.developer.id !== me.id;
+              }),
+        };
+      }
+    }),
+  };
+}
+
+let _cache: {
+  [tag: string]: PostsResponse;
 } = {};
 
 export const fetchPostsForTag = (tag: string): ThunkResult => {
@@ -53,6 +87,7 @@ export const likePost = (postId: number): ThunkResult => {
       // ! optimistic update
       const req = axios.post(url, {}, config);
 
+      // in de redux store updaten
       dispatch({
         type: "post_liked",
         payload: {
@@ -60,6 +95,9 @@ export const likePost = (postId: number): ThunkResult => {
           me: auth.user,
         },
       });
+      for (const tag of Object.keys(_cache)) {
+        _cache[tag] = updatePostsResponse(_cache[tag], postId, auth.user, true);
+      }
 
       await req;
       // TODO: invalidation/refresh
@@ -85,6 +123,19 @@ export const dislikePost = (postId: number): ThunkResult => {
       // ! optimistic update
       const req = axios.delete(url, config);
 
+      // Dit is niet mooi, dat ik het op twee
+      //  verschillende plekken moet updaten. Het is een gevolg
+      //  van dat ik de caching op thunk/url-niveau heb gedaan, ipv
+      //  in de store. Als ik in de store de cache bijhoudt,
+      //  kan ik:
+      // 1. Genormaliseerd de entities opslaan, maar hier gaat
+      //     mijn voorkeur niet naar uit.
+      // 2. Ditzelfde soort "update alle resultaten, per tag", maar dan
+      //     in de reducer. Dat zou een "maatwerk" oplossing zijn.
+      //     Dit vind ik wel heel erg Redux-achtig, en feature-georienteerd.
+      // Een totaal andere oplossing is op url-niveau, maar dan wel met
+      //  iets meer infrastructuur, door bijvoorbeeld een library
+      //  zoals `react-query` te gebruiken
       dispatch({
         type: "post_disliked",
         payload: {
@@ -92,6 +143,14 @@ export const dislikePost = (postId: number): ThunkResult => {
           me: auth.user,
         },
       });
+      for (const tag of Object.keys(_cache)) {
+        _cache[tag] = updatePostsResponse(
+          _cache[tag],
+          postId,
+          auth.user,
+          false
+        );
+      }
 
       await req;
       // TODO: invalidation/refresh

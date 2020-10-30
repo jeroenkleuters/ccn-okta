@@ -2,6 +2,7 @@
 import { Action } from "../types";
 import { FetchState } from "../../util/fetchstate";
 import { PostsResponse } from "../../lib/model";
+import { updatePostsResponse } from "./actions";
 
 export type HomepageFeedState = FetchState<PostsResponse>;
 
@@ -38,26 +39,7 @@ export function homepageFeedSliceReducer(
       const { postId, me } = action.payload;
       return {
         ...state,
-        data: {
-          count: state.data.count,
-          rows: state.data.rows.map((post) => {
-            if (post.id !== postId) {
-              return post;
-            } else {
-              return {
-                ...post,
-                post_likes: [
-                  ...post.post_likes,
-                  {
-                    createdAt: "", // niet heel mooi
-                    updatedAt: "", // niet heel mooi
-                    developer: me,
-                  },
-                ],
-              };
-            }
-          }),
-        },
+        data: updatePostsResponse(state.data, postId, me, true),
       };
     }
     case "post_disliked": {
@@ -67,21 +49,7 @@ export function homepageFeedSliceReducer(
       const { postId, me } = action.payload;
       return {
         ...state,
-        data: {
-          count: state.data.count,
-          rows: state.data.rows.map((post) => {
-            if (post.id !== postId) {
-              return post;
-            } else {
-              return {
-                ...post,
-                post_likes: post.post_likes.filter((like) => {
-                  return like.developer.id !== me.id;
-                }),
-              };
-            }
-          }),
-        },
+        data: updatePostsResponse(state.data, postId, me, false),
       };
     }
     default: {
